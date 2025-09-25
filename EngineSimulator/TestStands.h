@@ -9,10 +9,10 @@ struct PowerTestResult {
 class HeatTestStand {
 public:
 	// Возвращает время в секундах, прошедшее с запуска двигателя до перегрева
-	int RunTest(IEngine& engine, double environmentTemperature);
+	static int RunTest(IEngine& engine, double environmentTemperature);
 };
 
 class MaxPowerTestStand {
 public:
-	PowerTestResult RunTest(IEngine& engine, double environmentTemperature);
+	static PowerTestResult RunTest(IEngine& engine, double environmentTemperature);
 };
