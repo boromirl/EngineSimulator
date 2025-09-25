@@ -1,12 +1,12 @@
-#include "Engine.h"
+ï»¿#include "Engine.h"
 
 double MyEngine::calculateEngineTorque(double V) const {
     if (V < 0) {
         throw std::invalid_argument("Crankshaft speed (V) cannot be negative.");
-        // ìîæíî âìåñòî ýòîãî return -1;
+        // Ð¼Ð¾Ð¶Ð½Ð¾ Ð²Ð¼ÐµÑÑ‚Ð¾ ÑÑ‚Ð¾Ð³Ð¾ return -1;
     }
 
-    // Êóñî÷íî-ëèíåéíàÿ çàâèñèìîñòü
+    // ÐšÑƒÑÐ¾Ñ‡Ð½Ð¾-Ð»Ð¸Ð½ÐµÐ¹Ð½Ð°Ñ Ð·Ð°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑ‚ÑŒ
     if (V >= 0 && V < 75) return 20;
     else if (V >= 75 && V < 150) return 75;
     else if (V >= 150 && V < 200) return 100;
@@ -33,7 +33,7 @@ double MyEngine::calculateEnginePower() const {
 
 void MyEngine::Start(double environmentTemperature) {
     this->envTemperature = environmentTemperature;
-    // Òåìïåðàòóðà äâèãàòåëÿ äî ìîìåíòà ñòàðòà äîëæíà ðàâíÿòüñÿ òåìïåðàòóðå îêðóæàþùåé ñðåäû
+    // Ð¢ÐµÐ¼Ð¿ÐµÑ€Ð°Ñ‚ÑƒÑ€Ð° Ð´Ð²Ð¸Ð³Ð°Ñ‚ÐµÐ»Ñ Ð´Ð¾ Ð¼Ð¾Ð¼ÐµÐ½Ñ‚Ð° ÑÑ‚Ð°Ñ€Ñ‚Ð° Ð´Ð¾Ð»Ð¶Ð½Ð° Ñ€Ð°Ð²Ð½ÑÑ‚ÑŒÑÑ Ñ‚ÐµÐ¼Ð¿ÐµÑ€Ð°Ñ‚ÑƒÑ€Ðµ Ð¾ÐºÑ€ÑƒÐ¶Ð°ÑŽÑ‰ÐµÐ¹ ÑÑ€ÐµÐ´Ñ‹
     this->engineTemperature = environmentTemperature;
     this->isRunning = true;
 }
