@@ -13,6 +13,7 @@ public:
 
 	virtual void Start(double environmentTemperature) = 0;
 	virtual void RunForOneSecond() = 0;
+    virtual void Reset() = 0;
 
 	virtual const double& GetCrankshaftVelocity() const = 0;
 	virtual const double& GetEngineTemperature() const = 0;
@@ -21,8 +22,8 @@ public:
     virtual bool IsRunning() const = 0;
 };
 
-// 
-class MyEngine : public IEngine{
+// Internal Combustion Engin - Двигатель Внутреннего Сгорания
+class CombustionEngine : public IEngine{
 private:
 	/*  
         -------------------
@@ -63,7 +64,7 @@ private:
 
     /*
         ----------------------------
-        Методы вычисления переменных
+        Вспомогательные методы
         ----------------------------
     */
     double calculateEngineTorque(double V) const;
@@ -73,17 +74,8 @@ private:
     double calculateEnginePower() const;
 
 public:
-    MyEngine() {
-        engineTorque = 0.0;
-        envTemperature = 0.0;
-        crankshaftAcceleration = 0.0;
-        heatingSpeed = 0.0;
-        coolingSpeed = 0.0;
-
-        enginePower = 0.0;
-        crankshaftVelocity = 0.0;
-        engineTemperature = 0.0;
-        isRunning = false;
+    CombustionEngine() {
+        Reset();
     }
 
     /*  
@@ -118,5 +110,5 @@ public:
 
     void Start(double environmentTemperature) override;
     void RunForOneSecond() override;
-
+    void Reset() override;
 };

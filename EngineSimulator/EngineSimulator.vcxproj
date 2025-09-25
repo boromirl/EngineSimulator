@@ -126,7 +126,7 @@
     <ClCompile Include="HeatTestStand.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MaxPowerStand.cpp" />
-    <ClCompile Include="MyEngine.cpp" />
+    <ClCompile Include="CombustionEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h" />
