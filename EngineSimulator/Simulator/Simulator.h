@@ -1,8 +1,10 @@
 #pragma once
-#include "Engine.h"
-#include "OverheatTestStand.h"
-#include "MaxPowerTestStand.h"
+#include <stdexcept>
 #include <memory>
+
+#include "../Engine/Engine.h"
+#include "../TestStand/OverheatTestStand.h"
+#include "../TestStand/MaxPowerTestStand.h"
 
 class Simulator {
 private:

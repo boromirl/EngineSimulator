@@ -2,7 +2,7 @@
 
 #include <vector>
 
-// Интерфейс для разных видов двигателей
+// Общий класс для разных видов двигателей
 class Engine {
 protected:
     Engine() = default;
@@ -14,7 +14,7 @@ public:
 	virtual void Update(double dt) = 0;
     virtual void Reset(double environmentTemperature) = 0;
 
-	virtual const double& GetCrankshaftVelocity() const = 0;
+	virtual const double& GetCrankshaftSpeed() const = 0;
 	virtual const double& GetEngineTemperature() const = 0;
     virtual const double& GetEnginePower() const = 0;
     virtual const double& GetTime() const = 0;
@@ -43,7 +43,7 @@ private:
     const double cCoef = 0.1;
     // Значения M и V для интерполяции
     std::vector<double> torqueValues = { 20, 75, 100, 105, 75, 0 };
-    std::vector<double> velocityValues = { 0, 75, 150, 200, 250, 300 };
+    std::vector<double> speedValues = { 0, 75, 150, 200, 250, 300 };
 
     /*  
         ---------------------
@@ -62,7 +62,7 @@ private:
         --------------------
     */
     double enginePower;                     // Мощность двигателя
-    double crankshaftVelocity;              // скорость вращения коленвала (V)
+    double crankshaftSpeed;              // скорость вращения коленвала (V)
     double engineTemperature;               // температура двигателя
     bool isRunning;                         // работает ли двигатель (вырабатывается ли крутящий момент)
     double time;                            // время работы двигателя
@@ -89,8 +89,8 @@ public:
         -------
     */
 
-    const double& GetCrankshaftVelocity() const override {
-        return crankshaftVelocity;
+    const double& GetCrankshaftSpeed() const override {
+        return crankshaftSpeed;
     };
     const double& GetEngineTemperature() const override {
         return engineTemperature;
@@ -120,6 +120,8 @@ public:
         -----------------------------------
     */
 
+    // Симуляция работы за промежуток времени dt в секундах
     void Update(double dt) override;
+    // Восстановить двигатель к изначальному состоянию
     void Reset(double environmentTemperature) override;
 };

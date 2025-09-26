@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <limits>
-#include "Simulator.h"
+#include "Simulator/Simulator.h"
 
 static double getDoubleInput();
 static void printResult(const TestResult& result);
@@ -12,16 +12,16 @@ int main() {
 	std::cout << "Enter the environment temperature (in Celsius): ";
 	double environmentTemperature = getDoubleInput();
 
-	Simulator simulator(0.00001);
+	Simulator simulator(0.001);
 
 	try {
 		simulator.initializeEngine(environmentTemperature);
 
-		std::cout << "Running overheating test..." << std::endl;
+		std::cout << "\nRunning overheating test...\n" << std::endl;
 		TestResult overheatResult = simulator.runOverheatTest();
 		printResult(overheatResult);
 
-		std::cout << "Running Max power test..." << std::endl;
+		std::cout << "\nRunning Max power test...\n" << std::endl;
 		TestResult maxPowerResult = simulator.runMaxPowerTest();
 		printResult(maxPowerResult);
 	}

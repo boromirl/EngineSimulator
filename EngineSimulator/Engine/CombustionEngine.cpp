@@ -1,13 +1,13 @@
 ﻿#include "Engine.h"
 
-double CombustionEngine::calculateEngineTorque(double velocity) const {
-    if (velocity <= velocityValues.front()) return torqueValues.front();
-    if (velocity >= velocityValues.back()) return torqueValues.back();
+double CombustionEngine::calculateEngineTorque(double speed) const {
+    if (speed <= speedValues.front()) return torqueValues.front();
+    if (speed >= speedValues.back()) return torqueValues.back();
 
     // Линейная интерполяция
-    for (size_t i = 0; i < velocityValues.size() - 1; i++) {
-        if (velocity >= velocityValues[i] && velocity <= velocityValues[i + 1]) {
-            double diff = (velocity - velocityValues[i]) / (velocityValues[i + 1] - velocityValues[i]);
+    for (size_t i = 0; i < speedValues.size() - 1; i++) {
+        if (speed >= speedValues[i] && speed <= speedValues[i + 1]) {
+            double diff = (speed - speedValues[i]) / (speedValues[i + 1] - speedValues[i]);
             return torqueValues[i] + diff * (torqueValues[i + 1] - torqueValues[i]);
         }
     }
@@ -19,7 +19,7 @@ double CombustionEngine::calculateAcceleration() const {
 }
 
 double CombustionEngine::calculateHeatingSpeed() const {
-    return (engineTorque * hmCoef) + (crankshaftVelocity * crankshaftVelocity * hvCoef);
+    return (engineTorque * hmCoef) + (crankshaftSpeed * crankshaftSpeed * hvCoef);
 }
 
 double CombustionEngine::calculateCoolingSpeed() const {
@@ -27,12 +27,12 @@ double CombustionEngine::calculateCoolingSpeed() const {
 }
 
 double CombustionEngine::calculateEnginePower() const {
-    return engineTorque * crankshaftVelocity / 1000.0;
+    return engineTorque * crankshaftSpeed / 1000.0;
 }
 
 void CombustionEngine::Update(double dt) {
-    crankshaftVelocity += crankshaftAcceleration * dt;
-    engineTorque = calculateEngineTorque(crankshaftVelocity);
+    crankshaftSpeed += crankshaftAcceleration * dt;
+    engineTorque = calculateEngineTorque(crankshaftSpeed);
 
     heatingSpeed = calculateHeatingSpeed();
     coolingSpeed = calculateCoolingSpeed();
@@ -54,7 +54,7 @@ void CombustionEngine::Reset(double environmentTemperature) {
     coolingSpeed = 0.0;
 
     enginePower = 0.0;
-    crankshaftVelocity = 0.0;
+    crankshaftSpeed = 0.0;
     engineTemperature = environmentTemperature;
     isRunning = true;
     time = 0.0;

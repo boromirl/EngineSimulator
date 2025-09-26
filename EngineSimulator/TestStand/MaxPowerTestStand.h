@@ -10,14 +10,14 @@ public:
 		engine.Reset(engine.GetEnvTemperature());
 	
 		double maxPower = 0.0;
-		double velocityAtMax = 0.0;
+		double speedAtMax = 0.0;
 
 		while (engine.GetTime() < timeLimit && engine.IsRunning()) {
 			double currentPower = engine.GetEnginePower();
 
 			if (currentPower > maxPower) {
 				maxPower = currentPower;
-				velocityAtMax = engine.GetCrankshaftVelocity();
+				speedAtMax = engine.GetCrankshaftSpeed();
 			}
 
 			engine.Update(timeStep);
@@ -26,9 +26,9 @@ public:
 		return {
 			true,
 			"Max power: " + std::to_string(maxPower) + " kilowatts with " +
-			std::to_string(velocityAtMax) + " radians per second",
+			std::to_string(speedAtMax) + " radians per second",
 			maxPower,
-			velocityAtMax
+			speedAtMax
 		};
 	}
 };
