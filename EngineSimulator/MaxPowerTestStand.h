@@ -1,16 +1,16 @@
 #pragma once
 #include "TestStand.h"
 
-class MaxPowerTestStand : public ITestStand {
+class MaxPowerTestStand : public TestStand {
 private:
 	double timeLimit;		// ??? to parent class ???
 
 public:
-	MaxPowerTestStand(IEngine& eng, double dt, double maxTime)
-		: ITestStand(eng, dt), timeLimit(maxTime) { }
+	MaxPowerTestStand(Engine& eng, double dt, double maxTime)
+		: TestStand(eng, dt), timeLimit(maxTime) { }
 
 	TestResult run() override {
-		engine.Reset(20.0);		/// !!!!!!!!!!!!!! FIX to actual temprerature
+		engine.Reset(engine.GetEnvTemperature());
 	
 		double maxPower = 0.0;
 		double velocityAtMax = 0.0;
@@ -22,6 +22,8 @@ public:
 				maxPower = currentPower;
 				velocityAtMax = engine.GetCrankshaftVelocity();
 			}
+
+			engine.Update(timeStep);
 		}
 
 		return {

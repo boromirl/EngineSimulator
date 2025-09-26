@@ -6,13 +6,13 @@
 
 class Simulator {
 private:
-	std::unique_ptr<IEngine> engine;
+	std::unique_ptr<Engine> engine;
 	double timeStep;
 public:
 	Simulator(double dt = 1) : timeStep(dt) {}
 
 	void initializeEngine(double environmentTemperature) {
-		engine = std::make_unique<CombustionEngine>();
+		engine = std::make_unique<CombustionEngine>(environmentTemperature);
 	}
 
 	TestResult runOverheatTest() {

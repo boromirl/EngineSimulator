@@ -3,15 +3,14 @@
 #include <stdexcept>
 
 // Интерфейс для разных видов двигателей
-class IEngine {
+class Engine {
 protected:
-    IEngine() = default;
+    Engine() = default;
 public:
-	virtual ~IEngine() = default;
-    IEngine(const IEngine&) = delete;
-    IEngine& operator=(const IEngine&) = delete;
+	virtual ~Engine() = default;
+    Engine(const Engine&) = delete;
+    Engine& operator=(const Engine&) = delete;
 
-	virtual void Start(double environmentTemperature) = 0;
 	virtual void Update(double dt) = 0;
     virtual void Reset(double environmentTemperature) = 0;
 
@@ -19,12 +18,13 @@ public:
 	virtual const double& GetEngineTemperature() const = 0;
     virtual const double& GetEnginePower() const = 0;
     virtual const double& GetTime() const = 0;
+    virtual const double& GetEnvTemperature() const = 0;
     virtual bool IsOverheated() const = 0;
     virtual bool IsRunning() const = 0;
 };
 
 // Internal Combustion Engin - Двигатель Внутреннего Сгорания
-class CombustionEngine : public IEngine{
+class CombustionEngine : public Engine{
 private:
 	/*  
         -------------------
@@ -76,8 +76,8 @@ private:
     double calculateEnginePower() const;
 
 public:
-    CombustionEngine() {
-        Reset(20.0);
+    CombustionEngine(double environmentTemperature) {
+        Reset(environmentTemperature);
     }
 
     /*  
@@ -107,13 +107,16 @@ public:
         return isRunning;
     }
 
+    virtual const double& GetEnvTemperature() const {
+        return envTemperature;
+    }
+
     /*
         -----------------------------------
         Методы управления работой двигателя
         -----------------------------------
     */
 
-    void Start(double environmentTemperature) override;
     void Update(double dt) override;
     void Reset(double environmentTemperature) override;
 };

@@ -12,7 +12,7 @@ int main() {
 	std::cout << "Enter the environment temperature (in Celsius): ";
 	double environmentTemperature = getDoubleInput();
 
-	Simulator simulator(1.0);
+	Simulator simulator(0.00001);
 
 	try {
 		simulator.initializeEngine(environmentTemperature);

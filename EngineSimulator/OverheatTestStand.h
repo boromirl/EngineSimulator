@@ -1,16 +1,15 @@
 #pragma once
 #include "TestStand.h"
 
-class OverheatTestStand : public ITestStand {
+class OverheatTestStand : public TestStand {
 private:
 	double timeLimit;
 public:
-	OverheatTestStand(IEngine& eng, double dt, double maxTime)
-		: ITestStand(eng, dt), timeLimit(maxTime){ }
+	OverheatTestStand(Engine& eng, double dt, double maxTime)
+		: TestStand(eng, dt), timeLimit(maxTime){ }
 
-	// !!! TODO: reset to actual temperature
 	TestResult run() override {
-		engine.Reset(20.0);
+		engine.Reset(engine.GetEnvTemperature());
 
 		while (engine.GetTime() < timeLimit) {
 			if (engine.IsOverheated()) {

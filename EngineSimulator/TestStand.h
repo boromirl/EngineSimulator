@@ -9,15 +9,15 @@ struct TestResult {
 	double value2;
 };
 
-class ITestStand {
+class TestStand {
 protected:
-	IEngine& engine;
+	Engine& engine;
 	double timeStep;
 public:
-	ITestStand(IEngine& eng, double dt) : engine(eng), timeStep(dt) {}
-	virtual ~ITestStand() = default;
-	ITestStand(const ITestStand&) = delete;
-	ITestStand& operator=(const ITestStand&) = delete;
+	TestStand(Engine& eng, double dt) : engine(eng), timeStep(dt) {}
+	virtual ~TestStand() = default;
+	TestStand(const TestStand&) = delete;
+	TestStand& operator=(const TestStand&) = delete;
 
 	virtual TestResult run() = 0;
 	void setTimeStep(double dt) {

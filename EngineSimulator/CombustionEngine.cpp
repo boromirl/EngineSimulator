@@ -31,13 +31,6 @@ double CombustionEngine::calculateEnginePower() const {
     return engineTorque * crankshaftVelocity / 1000.0;
 }
 
-void CombustionEngine::Start(double environmentTemperature) {
-    this->envTemperature = environmentTemperature;
-    // Температура двигателя до момента старта должна равняться температуре окружающей среды
-    this->engineTemperature = environmentTemperature;
-    this->isRunning = true;
-}
-
 void CombustionEngine::Update(double dt) {
     crankshaftVelocity += crankshaftAcceleration * dt;
     engineTorque = calculateEngineTorque(crankshaftVelocity);
@@ -49,7 +42,9 @@ void CombustionEngine::Update(double dt) {
     enginePower = calculateEnginePower();
 
     crankshaftAcceleration = calculateAcceleration();
-    if (engineTorque <= 0) isRunning = false;
+    if (crankshaftAcceleration <= 0) isRunning = false;
+
+    time += dt;
 }
 
 void CombustionEngine::Reset(double environmentTemperature) {
@@ -62,6 +57,6 @@ void CombustionEngine::Reset(double environmentTemperature) {
     enginePower = 0.0;
     crankshaftVelocity = 0.0;
     engineTemperature = environmentTemperature;
-    isRunning = false;
+    isRunning = true;
     time = 0.0;
 }
