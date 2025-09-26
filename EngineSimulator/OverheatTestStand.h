@@ -2,11 +2,9 @@
 #include "TestStand.h"
 
 class OverheatTestStand : public TestStand {
-private:
-	double timeLimit;
 public:
 	OverheatTestStand(Engine& eng, double dt, double maxTime)
-		: TestStand(eng, dt), timeLimit(maxTime){ }
+		: TestStand(eng, dt, maxTime) { }
 
 	TestResult run() override {
 		engine.Reset(engine.GetEnvTemperature());

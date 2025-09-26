@@ -9,7 +9,7 @@ private:
 	std::unique_ptr<Engine> engine;
 	double timeStep;
 public:
-	Simulator(double dt = 1) : timeStep(dt) {}
+	Simulator(double dt = 1.0) : timeStep(dt) {}
 
 	void initializeEngine(double environmentTemperature) {
 		engine = std::make_unique<CombustionEngine>(environmentTemperature);

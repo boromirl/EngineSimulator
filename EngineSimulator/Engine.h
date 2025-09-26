@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <stdexcept>
+#include <vector>
 
 // Интерфейс для разных видов двигателей
 class Engine {
@@ -41,6 +41,9 @@ private:
     const double hvCoef = 0.00001;
     // Коэф. зависимости скорости охлаждения от температуры двигателя окружающей среды
     const double cCoef = 0.1;
+    // Значения M и V для интерполяции
+    std::vector<double> torqueValues = { 20, 75, 100, 105, 75, 0 };
+    std::vector<double> velocityValues = { 0, 75, 150, 200, 250, 300 };
 
     /*  
         ---------------------
@@ -69,7 +72,7 @@ private:
         Вспомогательные методы
         ----------------------------
     */
-    double calculateEngineTorque(double V) const;
+    double calculateEngineTorque(double velocity) const;
     double calculateAcceleration() const;
     double calculateHeatingSpeed() const;
     double calculateCoolingSpeed() const;

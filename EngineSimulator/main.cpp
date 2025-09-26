@@ -52,5 +52,5 @@ double getDoubleInput() {
 }
 
 void printResult(const TestResult& result) {
-	std::cout << (result.success ? "✓ " : "✗ ") << result.message << std::endl;
+	std::cout << (result.success ? "SUCCESS " : "FAIL ") << result.message << std::endl;
 }

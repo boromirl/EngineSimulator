@@ -13,8 +13,9 @@ class TestStand {
 protected:
 	Engine& engine;
 	double timeStep;
+	double timeLimit;
 public:
-	TestStand(Engine& eng, double dt) : engine(eng), timeStep(dt) {}
+	TestStand(Engine& eng, double dt, double maxTime) : engine(eng), timeStep(dt), timeLimit(maxTime) {}
 	virtual ~TestStand() = default;
 	TestStand(const TestStand&) = delete;
 	TestStand& operator=(const TestStand&) = delete;

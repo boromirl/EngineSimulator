@@ -1,18 +1,17 @@
 ﻿#include "Engine.h"
 
-double CombustionEngine::calculateEngineTorque(double V) const {
-    if (V < 0) {
-        throw std::invalid_argument("Crankshaft speed (V) cannot be negative.");
-        // можно вместо этого return -1;
-    }
+double CombustionEngine::calculateEngineTorque(double velocity) const {
+    if (velocity <= velocityValues.front()) return torqueValues.front();
+    if (velocity >= velocityValues.back()) return torqueValues.back();
 
-    // Кусочно-линейная зависимость
-    if (V >= 0 && V < 75) return 20;
-    else if (V >= 75 && V < 150) return 75;
-    else if (V >= 150 && V < 200) return 100;
-    else if (V >= 200 && V < 250) return 105;
-    else if (V >= 250 && V < 300) return 75;
-    else if (V >= 300) return 0;
+    // Линейная интерполяция
+    for (size_t i = 0; i < velocityValues.size() - 1; i++) {
+        if (velocity >= velocityValues[i] && velocity <= velocityValues[i + 1]) {
+            double diff = (velocity - velocityValues[i]) / (velocityValues[i + 1] - velocityValues[i]);
+            return torqueValues[i] + diff * (torqueValues[i + 1] - torqueValues[i]);
+        }
+    }
+    return torqueValues.back();
 }
 
 double CombustionEngine::calculateAcceleration() const {

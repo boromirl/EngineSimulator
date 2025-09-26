@@ -2,12 +2,9 @@
 #include "TestStand.h"
 
 class MaxPowerTestStand : public TestStand {
-private:
-	double timeLimit;		// ??? to parent class ???
-
 public:
 	MaxPowerTestStand(Engine& eng, double dt, double maxTime)
-		: TestStand(eng, dt), timeLimit(maxTime) { }
+		: TestStand(eng, dt, maxTime) { }
 
 	TestResult run() override {
 		engine.Reset(engine.GetEnvTemperature());
