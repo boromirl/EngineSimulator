@@ -38,29 +38,30 @@ void CombustionEngine::Start(double environmentTemperature) {
     this->isRunning = true;
 }
 
-void CombustionEngine::RunForOneSecond() {
-    this->crankshaftVelocity += this->crankshaftAcceleration;
-    this->engineTorque = calculateEngineTorque(this->crankshaftVelocity);
+void CombustionEngine::Update(double dt) {
+    crankshaftVelocity += crankshaftAcceleration * dt;
+    engineTorque = calculateEngineTorque(crankshaftVelocity);
 
-    this->heatingSpeed = calculateHeatingSpeed();
-    this->coolingSpeed = calculateCoolingSpeed();
-    this->engineTemperature += this->heatingSpeed - this->coolingSpeed;
+    heatingSpeed = calculateHeatingSpeed();
+    coolingSpeed = calculateCoolingSpeed();
+    engineTemperature += (heatingSpeed - coolingSpeed) * dt;
 
-    this->enginePower = calculateEnginePower();
+    enginePower = calculateEnginePower();
 
-    this->crankshaftAcceleration = calculateAcceleration();
+    crankshaftAcceleration = calculateAcceleration();
     if (engineTorque <= 0) isRunning = false;
 }
 
-void CombustionEngine::Reset() {
+void CombustionEngine::Reset(double environmentTemperature) {
     engineTorque = 0.0;
-    envTemperature = 0.0;
+    envTemperature = environmentTemperature;
     crankshaftAcceleration = 0.0;
     heatingSpeed = 0.0;
     coolingSpeed = 0.0;
 
     enginePower = 0.0;
     crankshaftVelocity = 0.0;
-    engineTemperature = 0.0;
+    engineTemperature = environmentTemperature;
     isRunning = false;
+    time = 0.0;
 }

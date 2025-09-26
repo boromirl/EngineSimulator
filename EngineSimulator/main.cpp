@@ -1,29 +1,36 @@
 ﻿#include <iostream>
 #include <limits>
-
-#include "TestStands.h"
+#include "Simulator.h"
 
 static double getDoubleInput();
+static void printResult(const TestResult& result);
 
 int main() {
-	double envTemp = 0.0;
-	CombustionEngine engine;
+	std::cout << "--- Engine simulator ---" << std::endl;
+	std::cout << std::endl;
 
-	std::cout << "---- Engine simulation ----" << std::endl;
 	std::cout << "Enter the environment temperature (in Celsius): ";
-	envTemp = getDoubleInput();
+	double environmentTemperature = getDoubleInput();
 
-	std::cout << "\nRunning overheating test..." << std::endl;
-	int heatTestResult = HeatTestStand::RunTest(engine, envTemp);
-	std::cout << "\nTest result:\n" <<
-		"  Engine runs for " << heatTestResult << " seconds before overheating." << std::endl;
+	Simulator simulator(1.0);
 
-	engine.Reset();
-	std::cout << "\nRunnig maximum engine power test..." << std::endl;
-	PowerTestResult powerTestResult = MaxPowerTestStand::RunTest(engine, envTemp);
-	std::cout << "\nTest result:\n" <<
-		"  Maximum engine power achieved is " << powerTestResult.maxPower << " kilowatts with velocity " << powerTestResult.crankshaftVelocity << " radians per second" <<  std::endl;
+	try {
+		simulator.initializeEngine(environmentTemperature);
 
+		std::cout << "Running overheating test..." << std::endl;
+		TestResult overheatResult = simulator.runOverheatTest();
+		printResult(overheatResult);
+
+		std::cout << "Running Max power test..." << std::endl;
+		TestResult maxPowerResult = simulator.runMaxPowerTest();
+		printResult(maxPowerResult);
+	}
+	catch (const std::exception& e) {
+		std::cerr << "Error: " << e.what() << std::endl;
+		return 1;
+	}
+
+	std::cout << "--- Simulation finished ---" << std::endl;
 	return 0;
 }
 
@@ -42,4 +49,8 @@ double getDoubleInput() {
 	}
 
 	return num;
+}
+
+void printResult(const TestResult& result) {
+	std::cout << (result.success ? "✓ " : "✗ ") << result.message << std::endl;
 }

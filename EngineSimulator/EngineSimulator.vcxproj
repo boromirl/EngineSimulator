@@ -123,14 +123,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="HeatTestStand.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MaxPowerStand.cpp" />
     <ClCompile Include="CombustionEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h" />
-    <ClInclude Include="TestStands.h" />
+    <ClInclude Include="MaxPowerTestStand.h" />
+    <ClInclude Include="OverheatTestStand.h" />
+    <ClInclude Include="Simulator.h" />
+    <ClInclude Include="TestStand.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

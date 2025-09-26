@@ -12,12 +12,13 @@ public:
     IEngine& operator=(const IEngine&) = delete;
 
 	virtual void Start(double environmentTemperature) = 0;
-	virtual void RunForOneSecond() = 0;
-    virtual void Reset() = 0;
+	virtual void Update(double dt) = 0;
+    virtual void Reset(double environmentTemperature) = 0;
 
 	virtual const double& GetCrankshaftVelocity() const = 0;
 	virtual const double& GetEngineTemperature() const = 0;
     virtual const double& GetEnginePower() const = 0;
+    virtual const double& GetTime() const = 0;
     virtual bool IsOverheated() const = 0;
     virtual bool IsRunning() const = 0;
 };
@@ -61,6 +62,7 @@ private:
     double crankshaftVelocity;              // скорость вращения коленвала (V)
     double engineTemperature;               // температура двигателя
     bool isRunning;                         // работает ли двигатель (вырабатывается ли крутящий момент)
+    double time;                            // время работы двигателя
 
     /*
         ----------------------------
@@ -75,7 +77,7 @@ private:
 
 public:
     CombustionEngine() {
-        Reset();
+        Reset(20.0);
     }
 
     /*  
@@ -93,6 +95,9 @@ public:
     const double& GetEnginePower() const override {
         return enginePower;
     }
+    const double& GetTime() const override {
+        return time;
+    }
 
     bool IsOverheated() const override {
         return engineTemperature > overheatTemp;
@@ -109,6 +114,6 @@ public:
     */
 
     void Start(double environmentTemperature) override;
-    void RunForOneSecond() override;
-    void Reset() override;
+    void Update(double dt) override;
+    void Reset(double environmentTemperature) override;
 };

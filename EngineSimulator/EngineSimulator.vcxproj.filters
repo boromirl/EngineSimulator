@@ -13,27 +13,39 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\Engine">
+      <UniqueIdentifier>{99361a94-ba04-498f-93fa-1adae58518b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\TestStand">
+      <UniqueIdentifier>{2aaa8f8a-a3dd-4324-acea-83ae3c68d2e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Simulator">
+      <UniqueIdentifier>{6fdf87cf-4bb0-4076-bb37-3b8e2802604f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CombustionEngine.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="HeatTestStand.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="MaxPowerStand.cpp">
-      <Filter>Исходные файлы</Filter>
+    <ClCompile Include="CombustionEngine.cpp">
+      <Filter>Исходные файлы\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Исходные файлы\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="TestStands.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="TestStand.h">
+      <Filter>Исходные файлы\TestStand</Filter>
+    </ClInclude>
+    <ClInclude Include="OverheatTestStand.h">
+      <Filter>Исходные файлы\TestStand</Filter>
+    </ClInclude>
+    <ClInclude Include="MaxPowerTestStand.h">
+      <Filter>Исходные файлы\TestStand</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulator.h">
+      <Filter>Исходные файлы\Simulator</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
