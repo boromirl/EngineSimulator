@@ -1,6 +1,7 @@
 #pragma once
 #include "TestStand.h"
 
+// Тест максимальной мощности
 class MaxPowerTestStand : public TestStand {
 public:
 	MaxPowerTestStand(Engine& eng, double dt, double maxTime)
@@ -12,7 +13,7 @@ public:
 		double maxPower = 0.0;
 		double speedAtMax = 0.0;
 
-		while (engine.GetTime() < timeLimit && engine.IsRunning()) {
+		while (engine.GetTime() < timeLimit && engine.IsGeneratingTorque()) {
 			double currentPower = engine.GetEnginePower();
 
 			if (currentPower > maxPower) {
@@ -25,7 +26,7 @@ public:
 
 		return {
 			true,
-			"Max power: " + std::to_string(maxPower) + " kilowatts with " +
+			"Max power: " + std::to_string(maxPower) + " kilowatts with crankshaft speed " +
 			std::to_string(speedAtMax) + " radians per second",
 			maxPower,
 			speedAtMax

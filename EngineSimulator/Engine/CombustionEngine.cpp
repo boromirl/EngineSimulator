@@ -31,17 +31,22 @@ double CombustionEngine::calculateEnginePower() const {
 }
 
 void CombustionEngine::Update(double dt) {
+    // Обновляем скорость вращения коленвала
     crankshaftSpeed += crankshaftAcceleration * dt;
+    // Рассчитываем крутящий момент коленвала
     engineTorque = calculateEngineTorque(crankshaftSpeed);
 
+    // Вычисляем температуру двигателя с учётом нагрева и охлаждения
     heatingSpeed = calculateHeatingSpeed();
     coolingSpeed = calculateCoolingSpeed();
-    engineTemperature += (heatingSpeed - coolingSpeed) * dt;
+    engineTemperature += (heatingSpeed + coolingSpeed) * dt;
 
+    // Обновляем мощность и ускорение
     enginePower = calculateEnginePower();
-
     crankshaftAcceleration = calculateAcceleration();
-    if (crankshaftAcceleration <= 0) isRunning = false;
+
+    // Определяем продолжает ли двигатель раскручиваться
+    if (engineTorque <= 0) isGeneratingTorque = false;
 
     time += dt;
 }
@@ -56,6 +61,6 @@ void CombustionEngine::Reset(double environmentTemperature) {
     enginePower = 0.0;
     crankshaftSpeed = 0.0;
     engineTemperature = environmentTemperature;
-    isRunning = true;
     time = 0.0;
+    isGeneratingTorque = true;
 }

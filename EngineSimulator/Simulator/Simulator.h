@@ -6,6 +6,8 @@
 #include "../TestStand/OverheatTestStand.h"
 #include "../TestStand/MaxPowerTestStand.h"
 
+// Основной класс для запуска различных симуляций
+// Можно управлять точностью при помощи dt, меньше dt = больше точность, дольше вычисления
 class Simulator {
 private:
 	std::unique_ptr<Engine> engine;
@@ -20,14 +22,14 @@ public:
 	TestResult runOverheatTest() {
 		if (!engine) throw std::runtime_error("Engine not initialized");
 
-		OverheatTestStand test(*engine, timeStep, 1000.0);
+		OverheatTestStand test(*engine, timeStep, 10000.0);
 		return test.run();
 	}
 
 	TestResult runMaxPowerTest() {
 		if (!engine) throw std::runtime_error("Engine not initialized");
 
-		MaxPowerTestStand test(*engine, timeStep, 1000.0);
+		MaxPowerTestStand test(*engine, timeStep, 10000.0);
 		return test.run();
 	}
 

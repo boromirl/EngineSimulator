@@ -2,7 +2,9 @@
 #include <limits>
 #include "Simulator/Simulator.h"
 
+// консольный ввод одного double значения с проверкой
 static double getDoubleInput();
+// консольный вывод результата теста
 static void printResult(const TestResult& result);
 
 int main() {
@@ -30,7 +32,7 @@ int main() {
 		return 1;
 	}
 
-	std::cout << "--- Simulation finished ---" << std::endl;
+	std::cout << "\n--- Simulation finished ---" << std::endl;
 	return 0;
 }
 

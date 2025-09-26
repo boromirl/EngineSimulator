@@ -1,6 +1,7 @@
 #pragma once
 #include "TestStand.h"
 
+// Тест перегрева двигателя
 class OverheatTestStand : public TestStand {
 public:
 	OverheatTestStand(Engine& eng, double dt, double maxTime)

@@ -19,8 +19,9 @@ public:
     virtual const double& GetEnginePower() const = 0;
     virtual const double& GetTime() const = 0;
     virtual const double& GetEnvTemperature() const = 0;
+    virtual const double& GetTorque() const = 0;
     virtual bool IsOverheated() const = 0;
-    virtual bool IsRunning() const = 0;
+    virtual bool IsGeneratingTorque() const = 0;
 };
 
 // Internal Combustion Engin - Двигатель Внутреннего Сгорания
@@ -31,19 +32,15 @@ private:
         Постоянные значения
         -------------------
     */
-    // Момент инерции двигателя
-    const int inertia = 10;
-    // Температура перегрева
-    const int overheatTemp = 110;
-    // Коэф. зависимости скорости нагрева от крутящего момента
-    const double hmCoef = 0.01;
-    // Коэф. зависимости скорости нагрева от скорости вращения коленвала
-    const double hvCoef = 0.00001;
-    // Коэф. зависимости скорости охлаждения от температуры двигателя окружающей среды
-    const double cCoef = 0.1;
+   
+    double inertia;                      // Момент инерции двигателя
+    double overheatTemp;                 // Температура перегрева
+    double hmCoef;                       // Коэф. зависимости скорости нагрева от крутящего момента
+    double hvCoef;                       // Коэф. зависимости скорости нагрева от скорости вращения коленвала
+    double cCoef;                        // Коэф. зависимости скорости охлаждения от температуры двигателя окружающей среды
     // Значения M и V для интерполяции
-    std::vector<double> torqueValues = { 20, 75, 100, 105, 75, 0 };
-    std::vector<double> speedValues = { 0, 75, 150, 200, 250, 300 };
+    std::vector<double> torqueValues;
+    std::vector<double> speedValues;
 
     /*  
         ---------------------
@@ -62,10 +59,10 @@ private:
         --------------------
     */
     double enginePower;                     // Мощность двигателя
-    double crankshaftSpeed;              // скорость вращения коленвала (V)
+    double crankshaftSpeed;                 // скорость вращения коленвала (V)
     double engineTemperature;               // температура двигателя
-    bool isRunning;                         // работает ли двигатель (вырабатывается ли крутящий момент)
     double time;                            // время работы двигателя
+    bool isGeneratingTorque;                // раскручивается ли двигатель
 
     /*
         ----------------------------
@@ -79,7 +76,24 @@ private:
     double calculateEnginePower() const;
 
 public:
-    CombustionEngine(double environmentTemperature) {
+    // Простая версия с дефолтными значениями
+    CombustionEngine(
+        double environmentTemperature,
+        double inertiaMoment = 10,
+        double overheatTemperature = 110,
+        double heatTorqueCoef = 0.01, 
+        double heatSpeedCoef = 0.0001,
+        double coolCoef = 0.1,
+        std::vector<double> torqueValuePoints = { 20, 75, 100, 105, 75, 0 },
+        std::vector<double> speedValuePoints = { 0, 75, 150, 200, 250, 300 })
+        : inertia(inertiaMoment),
+        overheatTemp(overheatTemperature),
+        hmCoef(heatTorqueCoef),
+        hvCoef(heatSpeedCoef),
+        cCoef(coolCoef) ,
+        torqueValues(torqueValuePoints),
+        speedValues(speedValuePoints)
+    {
         Reset(environmentTemperature);
     }
 
@@ -106,8 +120,12 @@ public:
         return engineTemperature > overheatTemp;
     }
 
-    bool IsRunning() const override {
-        return isRunning;
+    bool IsGeneratingTorque() const override {
+        return isGeneratingTorque;
+    }
+
+    const double& GetTorque() const override {
+        return engineTorque;
     }
 
     virtual const double& GetEnvTemperature() const {
@@ -122,6 +140,6 @@ public:
 
     // Симуляция работы за промежуток времени dt в секундах
     void Update(double dt) override;
-    // Восстановить двигатель к изначальному состоянию
+    // Сброс двигателя к изначальному состоянию
     void Reset(double environmentTemperature) override;
 };
